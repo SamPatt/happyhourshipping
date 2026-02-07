@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>Happy Hour Shipping Estimator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Happy Hour Shipping</h1>
+    <p class="subtitle">USPS Ground Advantage Estimator &middot; Syracuse, NY 13206</p>
+  </header>
+
+  <main>
+    <section class="card input-card">
+      <div class="field">
+        <label for="zip">Destination ZIP</label>
+        <input
+          type="text"
+          id="zip"
+          inputmode="numeric"
+          pattern="[0-9]{5}"
+          maxlength="5"
+          placeholder="e.g. 94103"
+          autocomplete="postal-code"
+        >
+        <span class="field-error" id="zip-error"></span>
+      </div>
+
+      <div class="field">
+        <label for="weight-oz">Total ounces</label>
+        <input
+          type="number"
+          id="weight-oz"
+          inputmode="decimal"
+          step="0.1"
+          min="0.1"
+          max="160"
+          placeholder="e.g. 12"
+        >
+        <div class="weight-or">or</div>
+        <label class="label-secondary">lbs and oz</label>
+        <div class="dual-weight">
+          <input
+            type="number"
+            id="weight-lb"
+            inputmode="numeric"
+            step="1"
+            min="0"
+            max="10"
+            placeholder="lb"
+          >
+          <span class="dual-weight-sep">lb</span>
+          <input
+            type="number"
+            id="weight-extra-oz"
+            inputmode="decimal"
+            step="0.1"
+            min="0"
+            max="15.9"
+            placeholder="oz"
+          >
+          <span class="dual-weight-sep">oz</span>
+        </div>
+        <span class="field-error" id="weight-error"></span>
+      </div>
+
+      <div class="field">
+        <label for="packaging">Packaging / Material Cost ($)</label>
+        <div class="pkg-quickadd" id="pkg-quickadd"></div>
+        <input
+          type="number"
+          id="packaging"
+          inputmode="decimal"
+          step="0.01"
+          min="0"
+          value="0.00"
+          placeholder="0.00"
+        >
+        <span class="field-error" id="packaging-error"></span>
+      </div>
+
+      <button id="calc-btn" type="button">Calculate</button>
+    </section>
+
+    <section class="card results-card" id="results" hidden>
+      <h2>Estimate</h2>
+
+      <div class="result-row">
+        <span class="result-label">USPS Postage</span>
+        <span class="result-value" id="out-usps">--</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">+ Packaging</span>
+        <span class="result-value" id="out-pkg">--</span>
+      </div>
+      <div class="result-row total-row">
+        <span class="result-label">Estimated Total</span>
+        <span class="result-value" id="out-total">--</span>
+      </div>
+
+      <hr>
+
+      <div class="result-row">
+        <span class="result-label">Square Charges Customer</span>
+        <span class="result-value" id="out-square">--</span>
+      </div>
+
+      <div class="result-row delta-row" id="delta-row">
+        <span class="result-label" id="delta-label">Delta</span>
+        <span class="result-value" id="out-delta">--</span>
+      </div>
+
+      <button id="record-btn" type="button">Record This Shipment</button>
+      <span class="record-feedback" id="record-feedback"></span>
+      <button id="copy-btn" type="button">Copy Summary</button>
+      <span class="copy-feedback" id="copy-feedback"></span>
+    </section>
+
+    <section class="card" id="error-card" hidden>
+      <p class="error-msg" id="error-msg"></p>
+    </section>
+
+    <details class="card details-card" id="details-section" hidden>
+      <summary>Details</summary>
+      <div class="details-body" id="details-body"></div>
+    </details>
+
+    <section class="card log-card" id="log-section" hidden>
+      <h2>Shipping Log</h2>
+      <div id="log-entries"></div>
+      <div class="log-totals" id="log-totals"></div>
+      <button id="csv-btn" type="button">Copy to CSV</button>
+      <span class="copy-feedback" id="csv-feedback"></span>
+    </section>
+  </main>
+
+  <footer>
+    <p>Estimates only &middot; Retail rates &middot; USPS Ground Advantage &middot; Origin ZIP3 132</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
